@@ -39,12 +39,20 @@ class Cliente
 
     function setId($id) {
         $this->id = $id;
+        return $this;
     }
 
     function setNome($nome) {
         $this->nome = $nome;
+        return $this;
     }
-
-
-
+    
+    public function __toString() {
+        return $this->nome;
+    }
+    
+    public function toArray(){
+        return (new ClassMethods())->extract($this);
+    }
+    
 } 
