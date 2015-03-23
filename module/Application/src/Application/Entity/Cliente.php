@@ -3,13 +3,18 @@
 namespace Application\Entity;
 
 use Doctrine\ORM\Mapping as ORM;
-
+use Zend\Stdlib\Hydrator\ClassMethods;
 /**
  * @ORM\Entity
  * @ORM\Table(name="cliente")
  */
 class Cliente
 {
+    public function __construct($options = null) {
+        (new ClassMethods())->hydrate($options, $this);
+        
+    }
+    
 
     /**
      * @ORM\Id
