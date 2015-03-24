@@ -5,7 +5,6 @@ namespace Application\Controller;
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
 
-use Application\Form\Formulario as FrmFormulario;
 
 class IndexController extends AbstractActionController {
 
@@ -26,15 +25,13 @@ class IndexController extends AbstractActionController {
 
     public function newAction() {
         
-        $form = new FrmFormulario();
-        
+        //receber dados do html metodo POST
         $data = $this->params()->fromPost();
-        //preencher os dados do formulario
         
+        //preencher os dados do formulario
         $form->setData($data);
 
         if ($form->isValid()) {
-
 
             $em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
 
@@ -42,6 +39,7 @@ class IndexController extends AbstractActionController {
             $repo = $em->getRepository('Cliente\Entity\Cliente');
 
             //atribuir os dados para sua entidade
+            
             $repo->persist($repo);
 
             $entityManager->flush();
