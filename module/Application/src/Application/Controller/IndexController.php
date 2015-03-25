@@ -4,7 +4,8 @@ namespace Application\Controller;
 
 use Zend\Mvc\Controller\AbstractActionController;
 use Zend\View\Model\ViewModel;
-
+use Application\Entity\Cliente as MinhaEntidade;
+use Zend\Stdlib\Hydrator\ClassMethods;
 
 class IndexController extends AbstractActionController {
 
@@ -24,27 +25,26 @@ class IndexController extends AbstractActionController {
     }
 
     public function newAction() {
-        
-        //receber dados do html metodo POST
-        $data = $this->params()->fromPost();
-        
-        //preencher os dados do formulario
-        $form->setData($data);
 
-        if ($form->isValid()) {
+        //receber dados do formulario
+        $data = $this->getRequest()->getPost();
 
-            $em = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
-
-            //pegar o repositorio da entidade
-            $repo = $em->getRepository('Cliente\Entity\Cliente');
-
-            //atribuir os dados para sua entidade
+        if(!empty($data)) {
+            //em vez de usar set isso set aquilo, esta classe faz isto automatico
+            $hydrator = new ClassMethods();
             
-            $repo->persist($repo);
+            $minhaEntidade = new MinhaEntidade();
 
-            $entityManager->flush();
+            //aqui o ClassMethods pega os dados e coloca nos campos da entidade
+            $hydrator->hydrate($data, $minhaEntidade);
+
+            //pegando o entity manager
+            $meuEntityManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
+
+            $meuEntityManager->persist($minhaEntidade); //persistindo a entidade
+
+            $meuEntityManager->flush(); //gravando no banco
         }
-
         return new ViewModel();
     }
 
