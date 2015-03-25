@@ -27,9 +27,10 @@ class IndexController extends AbstractActionController {
     public function newAction() {
 
         //receber dados do formulario
-        $data = $this->getRequest()->getPost();
-
+        $data = $this->params()->fromPost();
+        
         if(!empty($data)) {
+            
             //em vez de usar set isso set aquilo, esta classe faz isto automatico
             $hydrator = new ClassMethods();
             
@@ -40,11 +41,12 @@ class IndexController extends AbstractActionController {
 
             //pegando o entity manager
             $meuEntityManager = $this->getServiceLocator()->get('Doctrine\ORM\EntityManager');
-
+            
             $meuEntityManager->persist($minhaEntidade); //persistindo a entidade
 
             $meuEntityManager->flush(); //gravando no banco
         }
+        
         return new ViewModel();
     }
 
