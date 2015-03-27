@@ -10,17 +10,20 @@
     <th>Ação</th>
     </thead>
     <tbody>
-        <?php $data = $this->dados;?>
-        <?php //foreach ($this->dados as $data): ?>
+        <?php //$data = $this->dados;?>
+        <?php foreach ($this->dados as $data): ?>
         <tr>
-            <td><?php echo $data[id]; ?></td>
-            <td><?php echo $data[nome]; ?></td>
+<!--            <td><?php //echo $data[id]; ?></td>
+            <td><?php //echo $data[nome]; ?></td>-->
+            
+            <td><?php echo $data->getId(); ?></td>
+            <td><?php echo $data->getNome(); ?></td>
             <td>
                 
             </td>
 
         </tr>
-        <?php //endforeach; ?>
+        <?php endforeach; ?>
     </tbody>
 </table>
 </div>
